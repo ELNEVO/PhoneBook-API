@@ -11,7 +11,7 @@ public class PhoneNumberEntryRequest {
   @Pattern(
       regexp = "^[+0-9\\-\\(\\)\\s]+$",
       message =
-          "Phone number may only contain plus sign, digits, hyphens, parentheses and whitespace")
+          "Phone number may only contain plus signs, digits, hyphens, parentheses and whitespace")
   @Size(min = 7, max = 25, message = "Phone number length should be between 7 and 25")
   private String phoneNumber;
 

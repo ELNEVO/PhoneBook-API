@@ -1,38 +1,17 @@
 package com.neville.phonebook.service;
 
-import com.neville.phonebook.dao.PhoneNumberDao;
 import com.neville.phonebook.model.PhoneNumberEntry;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class PhoneNumberService {
+public interface PhoneNumberService {
 
-  private PhoneNumberDao dao;
+  List<PhoneNumberEntry> requestAll();
 
-  @Autowired
-  public PhoneNumberService(PhoneNumberDao dao) {
-    this.dao = dao;
-  }
+  PhoneNumberEntry requestOne(int id);
 
-  public List<PhoneNumberEntry> requestAll() {
-    return dao.getAll();
-  }
+  Integer add(PhoneNumberEntry phoneNumberEntry);
 
-  public PhoneNumberEntry requestOne(int id) {
-    return dao.getOne(id);
-  }
+  Integer save(PhoneNumberEntry phoneNumberEntry);
 
-  public Integer add(PhoneNumberEntry phoneNumberEntry) {
-    return dao.create(phoneNumberEntry);
-  }
-
-  public Integer save(PhoneNumberEntry phoneNumberEntry) {
-    return dao.update(phoneNumberEntry);
-  }
-
-  public Integer remove(int id) {
-    return dao.delete(id);
-  }
+  Integer remove(int id);
 }
