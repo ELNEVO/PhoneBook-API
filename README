@@ -1,0 +1,18 @@
+## Phone book API ##
+
+Maven run command: `mvn spring-boot:run`
+
+API url: http://localhost:8081/phoneNumber
+
+#### Example request body for phone number create and update ####
+{"name": "John Doe", "phoneNumber": "+24 (579) 821-2314"}
+
+#### Request body characteristics ####
+name:
+- optional
+- max character length is 100
+
+phoneNumber:
+- mandatory
+- character length between 3 and 25
+- may only contain plus signs, digits, hyphens, parentheses and whitespace

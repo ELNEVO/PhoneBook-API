@@ -46,7 +46,7 @@ public class PhoneNumberControllerIntegrationTest {
   }
 
   @Test
-  @DisplayName("Get one existing phone number - response status code: 200")
+  @DisplayName("Get one existing phone number providing id 5 - response status code: 200")
   @Order(2)
   public void givenPhoneNumbers_whenGetOnePhoneNumberProvidingId5_thenStatus200() throws Exception {
     mvc.perform(get("/phoneNumber/5").contentType(MediaType.APPLICATION_JSON))
@@ -56,12 +56,14 @@ public class PhoneNumberControllerIntegrationTest {
   }
 
   @Test
-  @DisplayName("Get non-existing phone number - response status code: 404")
+  @DisplayName("Get non-existing phone number providing id 15 - response status code: 404")
   @Order(3)
   public void givenPhoneNumbers_whenGetOnePhoneNumberProvidingId15_thenStatus404()
       throws Exception {
     mvc.perform(get("/phoneNumber/15").contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isNotFound());
+        .andExpect(status().isNotFound())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$.message").value("No phone number entry found with id 15"));
   }
 
   @Test
@@ -88,23 +90,28 @@ public class PhoneNumberControllerIntegrationTest {
     String phoneNumberEntry = "{\"name\":\"" + str + "\", \"phoneNumber\":\"+380 (407) 735-7954\"}";
     mvc.perform(
             post("/phoneNumber").contentType(MediaType.APPLICATION_JSON).content(phoneNumberEntry))
-        .andExpect(status().isBadRequest());
+        .andExpect(status().isBadRequest())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$[0].message").value("Name length cannot be greater than 100"));
   }
 
   @Test
   @DisplayName(
-      "Add one phone number providing phone number of length less than 7 - response status code: 400")
+      "Add one phone number providing phone number of length less than 3 - response status code: 400")
   @Order(6)
   public void
-      givenPhoneNumbers_whenAddPhoneNumberProvidingPhoneNumberOfLengthLessThan7_thenStatus400()
+      givenPhoneNumbers_whenAddPhoneNumberProvidingPhoneNumberOfLengthLessThan3_thenStatus400()
           throws Exception {
-    char[] charArray = new char[6];
+    char[] charArray = new char[2];
     Arrays.fill(charArray, '8');
     String str = new String(charArray);
     String phoneNumberEntry = "{\"name\":\"Claiborne Willson\", \"phoneNumber\":\"" + str + "\"}";
     mvc.perform(
             post("/phoneNumber").contentType(MediaType.APPLICATION_JSON).content(phoneNumberEntry))
-        .andExpect(status().isBadRequest());
+        .andExpect(status().isBadRequest())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(
+            jsonPath("$[0].message").value("Phone number length should be between 3 and 25"));
   }
 
   @Test
@@ -120,7 +127,10 @@ public class PhoneNumberControllerIntegrationTest {
     String phoneNumberEntry = "{\"name\":\"Claiborne Willson\", \"phoneNumber\":\"" + str + "\"}";
     mvc.perform(
             post("/phoneNumber").contentType(MediaType.APPLICATION_JSON).content(phoneNumberEntry))
-        .andExpect(status().isBadRequest());
+        .andExpect(status().isBadRequest())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(
+            jsonPath("$[0].message").value("Phone number length should be between 3 and 25"));
   }
 
   @Test
