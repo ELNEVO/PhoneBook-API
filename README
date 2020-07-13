@@ -4,6 +4,12 @@ Maven run command: `mvn spring-boot:run`
 
 API url: http://localhost:8081/phoneNumber
 
+Get all phone numbers -> (GET) http://localhost:8081/phoneNumber
+Get one phone number e.g. (GET) http://localhost:8081/phoneNumber/4
+Create one phone number -> (POST) http://localhost:8081/phoneNumber
+Update one phone number e.g. (PUT) http://localhost:8081/phoneNumber/4
+Delete one phone number e.g. (DELETE) http://localhost:8081/phoneNumber/4
+
 #### Example request body for phone number create and update ####
 {"name": "John Doe", "phoneNumber": "+24 (579) 821-2314"}
 
