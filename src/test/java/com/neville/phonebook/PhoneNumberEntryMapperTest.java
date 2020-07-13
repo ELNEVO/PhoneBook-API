@@ -18,8 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest
 public class PhoneNumberEntryMapperTest {
 
-  @Autowired
-  private PhoneNumberEntryMapper mapper;
+  @Autowired private PhoneNumberEntryMapper mapper;
 
   private static PhoneNumberEntryRequest entryRequest;
 
